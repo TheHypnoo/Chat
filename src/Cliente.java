@@ -11,9 +11,9 @@ import java.net.Socket;
 import javax.swing.*;
 
 class AccionEnviar implements ActionListener{
-    private JTextField areaTexto;
+    private final JTextField areaTexto;
     private PrintStream salida;
-    private String login;
+    private final String login;
 
     public AccionEnviar(Socket s, JTextField at, String l){
         areaTexto = at;
@@ -33,8 +33,8 @@ class AccionEnviar implements ActionListener{
 }
 
 class Talk {
-    private Socket socket;
-    private String login;
+    private final Socket socket;
+    private final String login;
 
     public Talk(Socket s, String l){
         socket = s;
@@ -49,14 +49,13 @@ class Talk {
         marco.add(areaTexto, "Center");
         JPanel panel = new JPanel(new FlowLayout());
         marco.add(panel, "South");
-        JTextField campoTexto = new JTextField(30);
-        panel.add(campoTexto);
+        JTextField campoTexto = new JTextField(15);
         JButton botonEnviar = new JButton("Enviar");
-        JButton botonRecuperar = new JButton("Recuperar chat");
         AccionEnviar ae = new AccionEnviar(socket, campoTexto, login);
         botonEnviar.addActionListener(ae);
         panel.add(botonEnviar);
-        panel.add(botonRecuperar);
+        panel.add(campoTexto);
+
         marco.setSize(600,800);
         marco.setVisible(true);
 
@@ -78,10 +77,11 @@ class Talk {
 }
 
 public class Cliente {
+    public static String login;
     public static void  main(String[] args)throws IOException {
         String direccion = "localhost";
         int puerto = 9999;
-        String login = JOptionPane.showInputDialog(null,
+        login = JOptionPane.showInputDialog(null,
                 "Escribe tu nombre");
 
 
